@@ -15,13 +15,18 @@ class TemplateTests(unittest.TestCase):
             root = Path(temporary)
             nested = root / "services" / "api"
             nested.mkdir(parents=True)
-            expected = [root / ".env.example", nested / ".env.sample", root / ".env.template"]
+            expected = [Path(".env.example"), Path("services/api/.env.sample"), Path(".env.template")]
             for path in expected:
-                path.write_text("KEY=value\n", encoding="utf-8")
+                (root / path).write_text("KEY=value\n", encoding="utf-8")
             for unsafe in (".env", ".env.local", ".env.production", ".env.local.example"):
                 (root / unsafe).write_text("SECRET=value\n", encoding="utf-8")
 
-            self.assertEqual(discover_template_paths(root), tuple(sorted(expected, key=lambda p: p.as_posix())))
+            actual = discover_template_paths(root)
+            actual_relative = tuple(
+                path.relative_to(root.resolve()).as_posix() for path in actual
+            )
+            expected_relative = tuple(sorted(path.as_posix() for path in expected))
+            self.assertEqual(actual_relative, expected_relative)
 
     def test_parses_export_and_plain_assignments_without_values(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
