@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "envref-map"
+version = "0.1.0"
+description = "Offline CLI that maps environment-variable references to example templates across Python, JavaScript, TypeScript, and shell."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "erburenwang" }]
+keywords = ["environment-variables", "dotenv", "static-analysis", "cli"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.scripts]
+envref-map = "envref_map.cli:main"
+
+[project.urls]
+Repository = "https://github.com/erburenwang/envref-map"
+Issues = "https://github.com/erburenwang/envref-map/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

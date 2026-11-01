@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.13"]
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Compile source and tests
+        run: python -m compileall -q src tests
+
+      - name: Run unit tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -v
+
+      - name: Install package without runtime dependencies
+        run: python -m pip install --no-deps .
+
+      - name: Check installed command help
+        run: envref-map --help
+
+      - name: Validate installed command JSON output
+        run: >-
+          python -c 'import io,json,sys; from envref_map.cli import main; old=sys.stdout; sys.stdout=io.StringIO(); code=main(["scan","--root",".","--format","json"]); output=sys.stdout.getvalue(); sys.stdout=old; assert code == 0; assert json.loads(output)["schema_version"] == 1'
