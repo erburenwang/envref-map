@@ -162,9 +162,9 @@
 - [x] Commit with `chore: package and document EnvRef Map`.
 - [x] Close all six Important and three Minor findings from the independent final review with regression coverage, including rejecting unsafe requested template aliases.
 - [x] Commit the review corrections with `fix: close final review findings`.
-- [ ] Prepare the GitHub form for public repository `erburenwang/envref-map`, with the local README initialized and no duplicate remote license or ignore file. Immediately before creation, show the exact description, visibility, and options and request browser action-time confirmation.
-- [ ] After the README seed commit exists, create GitHub blobs from every committed local file, create a full tree with the same paths and modes, and create a publication commit parented to the seed commit.
-- [ ] Move `main` to the publication commit with the seed SHA as `expected_sha` and `force=false`; stop and inspect the branch head if the lease fails.
-- [ ] Verify public visibility, remote main SHA, exact remote/local tree SHA equality, source/template files, and all six GitHub Actions jobs. Do not mark release complete while any job remains failed or unverified.
+- [x] Prepare the GitHub form for public repository `erburenwang/envref-map`, with the local README initialized and no duplicate remote license or ignore file. Immediately before creation, show the exact description, visibility, and options and request browser action-time confirmation.
+- [x] After the README seed commit exists, create GitHub blobs from every committed local file, create a full tree with the same paths and modes, and create a publication commit parented to the seed commit.
+- [x] Move `main` to the publication commit with the seed SHA as `expected_sha` and `force=false`; stop and inspect the branch head if the lease fails.
+- [x] Verify public visibility, remote main SHA, exact remote/local tree SHA equality, source/template files, and all six GitHub Actions jobs. Do not mark release complete while any job remains failed or unverified.
 
 **GitHub form prepared:** description `Offline CLI that maps environment-variable references to example templates across Python, JavaScript, TypeScript, and shell.`; visibility `Public`; initialize with README `Yes`; remote `.gitignore` `None`; remote license `None` (the local README, ignore rules, and MIT license are already prepared).
